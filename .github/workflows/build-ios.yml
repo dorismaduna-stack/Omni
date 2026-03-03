@@ -1,10 +1,10 @@
-name: Build Omni iOS
+name: Build Omni iOS (Local on GitHub)
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: 🏗 Checkout repo
         uses: actions/checkout@v4
@@ -24,5 +24,11 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🚀 Build for iOS
-        run: eas build --platform ios --profile development --non-interactive
+      - name: 🛠️ Build Locally on GitHub
+        run: eas build --platform ios --profile development --local --non-interactive
+
+      - name: 📤 Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Omni-iOS-Build
+          path: '**/*.ipa'
